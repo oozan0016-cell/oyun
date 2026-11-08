@@ -11,7 +11,7 @@ var yercekimi = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
+    _mobil_kontrollerini_olustur()
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotate_y(-event.relative.x * FARE_HASSASIYETI)
@@ -37,3 +37,43 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, hiz)
 
 	move_and_slide()
+func _mobil_kontrollerini_olustur():
+    var katman = CanvasLayer.new()
+    add_child(katman)
+
+    var arayuz = Control.new()
+    arayuz.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    katman.add_child(arayuz)
+
+    _mobil_buton(arayuz, "↑", "ui_up", 0.0, 130, -220)
+    _mobil_buton(arayuz, "↓", "ui_down", 0.0, 130, -140)
+    _mobil_buton(arayuz, "←", "ui_left", 0.0, 40, -140)
+    _mobil_buton(arayuz, "→", "ui_right", 0.0, 220, -140)
+    _mobil_buton(arayuz, "ZIPLA", "ui_accept", 1.0, -150, -150)
+
+
+func _mobil_buton(parent, yazi, eylem, yatay, x, y):
+    var buton = Button.new()
+
+    buton.text = yazi
+    buton.custom_minimum_size = Vector2(80, 70)
+
+    buton.anchor_left = yatay
+    buton.anchor_right = yatay
+    buton.anchor_top = 1.0
+    buton.anchor_bottom = 1.0
+
+    buton.offset_left = x
+    buton.offset_right = x + 80
+    buton.offset_top = y
+    buton.offset_bottom = y + 70
+
+    parent.add_child(buton)
+
+    buton.button_down.connect(func():
+        Input.action_press(eylem)
+    )
+
+    buton.button_up.connect(func():
+        Input.action_release(eylem)
+    )
