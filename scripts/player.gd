@@ -53,27 +53,32 @@ func _mobil_kontrollerini_olustur():
 
 
 func _mobil_buton(parent, yazi, eylem, yatay, x, y):
-    var buton = Button.new()
+	var buton = Button.new()
+	buton.focus_mode = Control.FOCUS_NONE
 
-    buton.text = yazi
-    buton.custom_minimum_size = Vector2(80, 70)
+	buton.text = yazi
+	buton.custom_minimum_size = Vector2(80, 70)
 
-    buton.anchor_left = yatay
-    buton.anchor_right = yatay
-    buton.anchor_top = 1.0
-    buton.anchor_bottom = 1.0
+	buton.anchor_left = yatay
+	buton.anchor_right = yatay
+	buton.anchor_top = 1.0
+	buton.anchor_bottom = 1.0
 
-    buton.offset_left = x
-    buton.offset_right = x + 80
-    buton.offset_top = y
-    buton.offset_bottom = y + 70
+	buton.offset_left = x
+	buton.offset_right = x + 80
+	buton.offset_top = y
+	buton.offset_bottom = y + 70
 
-    parent.add_child(buton)
+	parent.add_child(buton)
 
-    buton.button_down.connect(func():
-        Input.action_press(eylem)
-    )
+	buton.button_down.connect(func():
+		Input.action_press(eylem)
+	)
 
-    buton.button_up.connect(func():
-        Input.action_release(eylem)
-    )
+	buton.button_up.connect(func():
+		Input.action_release(eylem)
+	)
+
+	buton.mouse_exited.connect(func():
+		Input.action_release(eylem)
+	)
