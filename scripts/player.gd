@@ -11,7 +11,8 @@ var yercekimi = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-    _mobil_kontrollerini_olustur()
+  _mobil_kontrollerini_olustur()
+	_dunya_guzellestir.call_deferred()
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotate_y(-event.relative.x * FARE_HASSASIYETI)
